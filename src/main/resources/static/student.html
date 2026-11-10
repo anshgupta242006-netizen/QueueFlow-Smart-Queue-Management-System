@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QueueLess | Student Token & Appointment Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=3.0">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon student-icon-glow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                </div>
+                <div>
+                    <h2>QueueLess</h2>
+                    <span class="badge-sub student-badge">Student Portal</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-item active" data-tab="book-view">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Book New Token
+                </button>
+                <button class="nav-item" data-tab="track-view">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Track My Token
+                </button>
+                <button class="nav-item" data-tab="queue-view">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    Live Campus Queue
+                </button>
+            </nav>
+
+            <div class="sidebar-portal-switch">
+                <span class="muted" style="font-size: 0.78rem;">Administrative staff only:</span>
+                <a href="admin.html" class="portal-switch-link">
+                    <span>🔒 Staff Login (Admin Block)</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="index.html" class="portal-home-link">← Portal Gateway</a>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <span class="pulse-dot"></span>
+                    <span>Admin Desk Online</span>
+                </div>
+                <small class="muted">Afternoon slots available</small>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="top-header">
+                <div>
+                    <h1 id="page-title">Student Token Booking</h1>
+                    <p class="subtitle" id="page-desc">Reserve your token, upload required verification documents, and select your preferred slot.</p>
+                </div>
+                <div class="header-actions">
+                    <div class="badge-pill" id="live-time-badge">🕒 Mon - Fri: 09:00 - 17:00</div>
+                    <a href="index.html" class="btn btn-outline" style="font-size: 0.82rem; padding: 6px 12px;">Home Gateway</a>
+                </div>
+            </header>
+
+            <!-- TAB 1: BOOK TOKEN VIEW -->
+            <div id="book-view" class="tab-pane active">
+                <!-- Booking Form Section -->
+                <div class="card glass-card" id="booking-container">
+                    <div class="card-header" style="align-items: flex-start;">
+                        <div>
+                            <div style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 9999px; font-size: 0.74rem; font-weight: 700; color: #10b981; margin-bottom: 8px;">
+                                <span>🎓 Official Campus Desk Token</span>
+                            </div>
+                            <h2>Reserve Campus Digital Token</h2>
+                            <p class="muted" style="font-size: 0.9rem;">Submit your details below to generate your official pass and visit during designated hours.</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <span class="step-tag" style="background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0;">● Live Counter Active</span>
+                        </div>
+                    </div>
+
+                    <form id="book-form" class="clean-form" enctype="multipart/form-data">
+                        <!-- Step 1: Student Particulars -->
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="studentName">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    <span>Full Name</span>
+                                    <span class="req">*</span>
+                                </label>
+                                <div class="input-icon-wrap">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    <input type="text" id="studentName" required placeholder="e.g. Akanksha Sharma">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="rollNumber">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><line x1="15" y1="8" x2="17" y2="8"/><line x1="15" y1="12" x2="17" y2="12"/><line x1="7" y1="16" x2="17" y2="16"/></svg>
+                                    <span>Roll / Registration Number</span>
+                                    <span class="req">*</span>
+                                </label>
+                                <div class="input-icon-wrap">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><line x1="15" y1="8" x2="17" y2="8"/><line x1="15" y1="12" x2="17" y2="12"/><line x1="7" y1="16" x2="17" y2="16"/></svg>
+                                    <input type="text" id="rollNumber" required placeholder="e.g. 2024CS105" style="text-transform: uppercase; font-family: var(--font-mono);">
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <label for="serviceRequested">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                                    <span>Administrative Service Requested</span>
+                                    <span class="req">*</span>
+                                </label>
+                                <div class="input-icon-wrap">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                    <select id="serviceRequested" required>
+                                        <option value="" disabled selected>-- Choose Administrative Service --</option>
+                                        <option value="Bonafide Certificate">Bonafide Certificate (⚡ High Priority)</option>
+                                        <option value="Scholarship Verification">Scholarship Verification (⚡ Priority)</option>
+                                        <option value="Identity Card Correction">Identity Card Correction</option>
+                                        <option value="Fee Receipt & Clearance">Fee Receipt & Clearance</option>
+                                        <option value="Transcript Attestation">Transcript Attestation</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Preferred Time / Slot Selection with Visual Interactive Cards & Mode Switcher -->
+                        <div class="form-group" style="margin-bottom: 22px;">
+                            <div class="slot-section-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                <span>Choose Your Preferred Slot Schedule or Exact Time:</span>
+                            </div>
+
+                            <!-- Mode Switcher Tabs -->
+                            <div class="slot-mode-tabs">
+                                <button type="button" class="btn-slot-mode active-mode" id="btn-mode-preset">
+                                    <span>🏫 Campus Slot Windows</span>
+                                </button>
+                                <button type="button" class="btn-slot-mode" id="btn-mode-custom">
+                                    <span>⏱️ Pick Specific Date & Exact Time</span>
+                                </button>
+                            </div>
+
+                            <!-- Mode 1: Preset Campus Cards Grid -->
+                            <div id="preset-slots-view">
+                                <div class="slot-cards-grid" id="slot-cards-container">
+                                    <div class="slot-card active-slot" data-slot="Afternoon (1:30 PM - 3:30 PM) [Working Day]">
+                                        <div class="slot-card-header">
+                                            <span class="slot-card-name">☀️ Afternoon Slot 1</span>
+                                            <span class="slot-badge-rec">Recommended</span>
+                                        </div>
+                                        <span class="slot-card-time">01:30 PM - 03:30 PM</span>
+                                        <span class="slot-card-meta">Official Working Day</span>
+                                    </div>
+
+                                    <div class="slot-card" data-slot="Morning (10:00 AM - 12:30 PM) [Working Day]">
+                                        <div class="slot-card-header">
+                                            <span class="slot-card-name">🌅 Morning Slot</span>
+                                        </div>
+                                        <span class="slot-card-time">10:00 AM - 12:30 PM</span>
+                                        <span class="slot-card-meta">Official Working Day</span>
+                                    </div>
+
+                                    <div class="slot-card" data-slot="Afternoon (3:30 PM - 5:00 PM) [Working Day]">
+                                        <div class="slot-card-header">
+                                            <span class="slot-card-name">🌇 Late Afternoon</span>
+                                        </div>
+                                        <span class="slot-card-time">03:30 PM - 05:00 PM</span>
+                                        <span class="slot-card-meta">Official Working Day</span>
+                                    </div>
+
+                                    <div class="slot-card" data-slot="Special Saturday Slot (Non-Working Day)">
+                                        <div class="slot-card-header">
+                                            <span class="slot-card-name">📅 Special Saturday</span>
+                                        </div>
+                                        <span class="slot-card-time">11:00 AM - 01:00 PM</span>
+                                        <span class="slot-card-meta">Special Non-Working Day</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mode 2: Dedicated Exact Date & Time Picker Container -->
+                            <div id="custom-time-picker-box" style="display: none; background: rgba(16, 185, 129, 0.06); border: 1.5px solid #a7f3d0; border-radius: var(--radius-sm); padding: 16px; margin-top: 10px;">
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 12px;">
+                                    <div>
+                                        <label for="pickerDate" style="font-size: 0.82rem; font-weight: 700; color: #065f46; display: block; margin-bottom: 6px;">📅 Choose Visit Date:</label>
+                                        <input type="date" id="pickerDate" style="width: 100%; padding: 10px 12px; border: 1.5px solid #10b981; border-radius: 8px; font-size: 0.92rem; background: #fff; font-family: inherit;">
+                                    </div>
+                                    <div>
+                                        <label for="pickerTime" style="font-size: 0.82rem; font-weight: 700; color: #065f46; display: block; margin-bottom: 6px;">⏰ Choose Exact Time:</label>
+                                        <input type="time" id="pickerTime" value="14:00" style="width: 100%; padding: 10px 12px; border: 1.5px solid #10b981; border-radius: 8px; font-size: 0.92rem; background: #fff; font-family: inherit;">
+                                    </div>
+                                </div>
+
+                                <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 12px; flex-wrap: wrap;">
+                                    <button type="button" id="btn-quick-now" style="padding: 7px 14px; background: #10b981; color: #fff; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; font-size: 0.82rem;">⚡ Next Available (Today)</button>
+                                    <button type="button" id="btn-tomorrow-afternoon" style="padding: 7px 14px; background: #059669; color: #fff; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; font-size: 0.82rem;">☀️ Tomorrow 02:00 PM</button>
+                                </div>
+
+                                <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                                    <span style="font-size: 0.8rem; color: #64748b; font-weight: 700;">Quick Time Shortcuts:</span>
+                                    <button type="button" class="btn-time-chip" data-time="10:00">10:00 AM</button>
+                                    <button type="button" class="btn-time-chip" data-time="10:30">10:30 AM</button>
+                                    <button type="button" class="btn-time-chip" data-time="11:45">11:45 AM</button>
+                                    <button type="button" class="btn-time-chip active-chip" data-time="14:00">02:00 PM</button>
+                                    <button type="button" class="btn-time-chip" data-time="14:45">02:45 PM</button>
+                                    <button type="button" class="btn-time-chip" data-time="15:30">03:30 PM</button>
+                                    <button type="button" class="btn-time-chip" data-time="16:15">04:15 PM</button>
+                                </div>
+                            </div>
+
+                            <!-- Selected Appointment Live Confirmation Badge -->
+                            <div id="selected-slot-preview" style="margin-top: 12px; padding: 12px 16px; background: #ecfdf5; border: 1.5px solid #10b981; border-radius: 8px; font-size: 0.9rem; color: #065f46; display: flex; align-items: center; gap: 10px; box-shadow: 0 1px 3px rgba(16, 185, 129, 0.1);">
+                                <span style="font-size: 1.2rem;">🕒</span>
+                                <div>
+                                    <span style="display: block; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; color: #059669;">Your Confirmed Appointment Time</span>
+                                    <strong id="selected-slot-text" style="font-size: 1rem; color: #065f46;">Afternoon (1:30 PM - 3:30 PM) [Working Day]</strong>
+                                </div>
+                            </div>
+
+                            <!-- Hidden inputs for backward compatibility -->
+                            <input type="datetime-local" id="preferredTime" style="display: none;">
+                            <select id="timeSlotType" class="slot-quick-pick" style="display: none;">
+                                <option value="Afternoon (1:30 PM - 3:30 PM) [Working Day]" selected>Afternoon (1:30 PM - 3:30 PM) [Working Day]</option>
+                                <option value="Morning (10:00 AM - 12:30 PM) [Working Day]">Morning (10:00 AM - 12:30 PM) [Working Day]</option>
+                                <option value="Afternoon (3:30 PM - 5:00 PM) [Working Day]">Afternoon (3:30 PM - 5:00 PM) [Working Day]</option>
+                                <option value="Special Saturday Slot (Non-Working Day)">Special Saturday Slot (Non-Working Day)</option>
+                                <option value="CUSTOM">Custom Specific Date & Time...</option>
+                            </select>
+                        </div>
+
+                        <!-- Step 3: Verification Document Dropzone -->
+                        <div class="form-group doc-upload-group" style="margin-bottom: 20px;">
+                            <label for="document">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                                <span>Upload Verification Document (ID Card, Fee Receipt, or Marksheet)</span>
+                            </label>
+                            
+                            <div class="file-dropzone" id="dropzone">
+                                <div class="dropzone-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                </div>
+                                <div class="drop-text">
+                                    <span class="highlight">Click to browse document</span> or drag & drop file here
+                                    <div class="drop-formats">
+                                        <span class="format-tag">PDF</span>
+                                        <span class="format-tag">JPG</span>
+                                        <span class="format-tag">PNG</span>
+                                        <span class="format-tag">DOCX</span>
+                                        <span style="font-size:0.72rem; color:#94a3b8; align-self:center;">up to 10MB</span>
+                                    </div>
+                                </div>
+                                <input type="file" id="document" name="file" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx">
+                                <div id="selected-file-name" class="file-name-preview"></div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Submission with Animation & Reassurance -->
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="btn-book" style="width: 100%; padding: 15px; font-size: 1.05rem; background: linear-gradient(135deg, #10b981 0%, #059669 100%); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);">
+                                <span>Confirm & Generate Digital Token</span>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                            </button>
+                            <span class="form-actions-note">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                <span>Instant digital pass • Registered directly on campus queue server</span>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ONLY USER'S BOOKED TOKEN DIGITAL PASS (Shows when booked or tracked) -->
+                <div id="my-token-pass" class="card token-pass-card" style="display: none;">
+                    <div class="token-pass-header">
+                        <div class="pass-chip">OFFICIAL CAMPUS PASS</div>
+                        <span class="pass-date" id="pass-issued-date">Issued Just Now</span>
+                    </div>
+
+                    <div class="token-main-row">
+                        <div class="token-badge-container">
+                            <span class="token-caption">YOUR TOKEN NUMBER</span>
+                            <div class="token-hero-number" id="pass-token-number">T1</div>
+                            <span class="status-pill status-pending" id="pass-status">PENDING</span>
+                        </div>
+
+                        <div class="pass-details-grid">
+                            <div class="detail-box">
+                                <span class="label">Student Name</span>
+                                <strong id="pass-name">-</strong>
+                            </div>
+                            <div class="detail-box">
+                                <span class="label">Roll Number</span>
+                                <strong id="pass-roll">-</strong>
+                            </div>
+                            <div class="detail-box">
+                                <span class="label">Service Category</span>
+                                <strong id="pass-service">-</strong>
+                            </div>
+                            <div class="detail-box">
+                                <span class="label">Your Preferred Slot</span>
+                                <strong id="pass-pref-time">-</strong>
+                                <button type="button" class="btn btn-outline" id="btn-show-edit-time" style="padding: 3px 8px; font-size: 0.75rem; margin-top: 6px; align-self: flex-start;">✏️ Change Preferred Time</button>
+                                <div id="student-edit-time-box" style="display: none; margin-top: 8px;">
+                                    <select id="student-new-time-preset" style="font-size: 0.85rem; padding: 6px; width: 100%;">
+                                        <option value="Tomorrow Afternoon (01:30 PM - 03:30 PM) [Working Day]">Tomorrow Afternoon (01:30 PM - 03:30 PM) [Working Day]</option>
+                                        <option value="Tomorrow Afternoon (03:30 PM - 05:00 PM) [Working Day]">Tomorrow Afternoon (03:30 PM - 05:00 PM) [Working Day]</option>
+                                        <option value="Next Working Day Morning (10:00 AM - 12:30 PM)">Next Working Day Morning (10:00 AM - 12:30 PM)</option>
+                                        <option value="Saturday Special Slot (11:00 AM) [Non-Working Day]">Saturday Special Slot (11:00 AM) [Non-Working Day]</option>
+                                    </select>
+                                    <div style="display: flex; gap: 6px; margin-top: 6px;">
+                                        <button type="button" class="btn btn-primary" id="btn-save-student-time" style="padding: 4px 10px; font-size: 0.8rem;">Save</button>
+                                        <button type="button" class="btn btn-outline" id="btn-cancel-student-time" style="padding: 4px 10px; font-size: 0.8rem;">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="detail-box highlight-slot">
+                                <span class="label">Admin Block Designated Visit Time</span>
+                                <strong id="pass-admin-slot" class="text-amber">Pending Admin Schedule (Afternoon/Working day)</strong>
+                            </div>
+                            <div class="detail-box">
+                                <span class="label">Uploaded Verification Document</span>
+                                <div id="pass-doc-link"><span class="muted">No document uploaded</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pass-footer">
+                        <div class="pass-notice">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                            <span>This pass belongs to your token only. Keep this page open or save your token number. The administrative counter will call you per your assigned visit slot.</span>
+                        </div>
+                        <div class="pass-actions">
+                            <button type="button" class="btn btn-outline" id="btn-copy-token">📋 Copy Token</button>
+                            <button type="button" class="btn btn-outline" id="btn-print-token" onclick="window.print()">🖨️ Print Pass</button>
+                            <button type="button" class="btn btn-secondary" id="btn-book-another">Book Another Token</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: TRACK TOKEN VIEW -->
+            <div id="track-view" class="tab-pane">
+                <div class="card glass-card">
+                    <div class="card-header">
+                        <div>
+                            <h2>Track Your Token Status</h2>
+                            <p class="muted">Check your assigned afternoon slot, approval status, and counter progress.</p>
+                        </div>
+                    </div>
+                    <div class="search-token-bar" style="margin-top: 10px;">
+                        <div class="search-input-group" style="width: 100%; max-width: 520px;">
+                            <input type="text" id="lookup-token-input" placeholder="Enter Token ID (e.g. T1, T2)..." style="font-size: 1rem; padding: 12px 16px;">
+                            <button class="btn btn-primary" id="btn-lookup-token" style="padding: 12px 24px;">Search Token</button>
+                        </div>
+                    </div>
+                    <div id="track-error-msg" class="message-banner banner-warning" style="display: none; margin-top: 16px;"></div>
+                </div>
+
+                <div id="tracked-token-container" style="margin-top: 24px;"></div>
+            </div>
+
+            <!-- TAB 3: LIVE QUEUE VIEW -->
+            <div id="queue-view" class="tab-pane">
+                <div class="live-board-grid">
+                    <div class="card live-card primary-live">
+                        <span class="live-badge">NOW SERVING AT COUNTER</span>
+                        <div class="live-huge-token" id="live-serving-token">--</div>
+                        <div class="live-details" id="live-serving-details">Waiting for counter...</div>
+                    </div>
+
+                    <div class="card live-card secondary-live">
+                        <span class="live-badge">NEXT IN LINE</span>
+                        <div class="live-huge-token text-secondary" id="live-next-token">--</div>
+                        <div class="live-details" id="live-next-details">Please be ready with your documents</div>
+                    </div>
+                </div>
+
+                <div class="card glass-card" style="margin-top: 24px;">
+                    <div class="card-header">
+                        <div>
+                            <h2>Public Counter Queue Order</h2>
+                            <p class="muted">Live status of applications in priority and FIFO order.</p>
+                        </div>
+                        <span class="badge-pill">Auto-refreshes every 4s</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="modern-table">
+                            <thead>
+                                <tr>
+                                    <th>Queue Position</th>
+                                    <th>Token</th>
+                                    <th>Student Name</th>
+                                    <th>Service</th>
+                                    <th>Designated Slot Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="live-queue-body">
+                                <tr><td colspan="6" class="text-center muted">Loading live queue...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="student.js"></script>
+</body>
+</html>

@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QueueLess | Campus Smart Queue & Administration Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=3.0">
+    <style>
+        /* Self-contained gate styling ensuring instant, reliable, and stunning rendering */
+        :root {
+            --gate-bg: #0b1120;
+            --gate-card-bg: rgba(23, 32, 54, 0.75);
+            --gate-border: rgba(255, 255, 255, 0.1);
+            --gate-student: #10b981;
+            --gate-student-glow: rgba(16, 185, 129, 0.35);
+            --gate-admin: #f59e0b;
+            --gate-admin-glow: rgba(245, 158, 11, 0.35);
+            --gate-primary: #3b82f6;
+            --gate-text: #f8fafc;
+            --gate-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body.gateway-body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--gate-bg);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.18) 0%, transparent 60%),
+                radial-gradient(circle at 15% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 50%, rgba(245, 158, 11, 0.08) 0%, transparent 40%);
+            color: var(--gate-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 20px;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* Top Center Highlighted Project Branding */
+        .gate-center-header {
+            text-align: center;
+            max-width: 820px;
+            margin: 0 auto 46px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gate-pill-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(59, 130, 246, 0.12);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 9999px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #60a5fa;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.15);
+        }
+
+        .gate-pill-dot {
+            width: 8px;
+            height: 8px;
+            background: #60a5fa;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #60a5fa;
+            animation: pulseDot 2s infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        .gate-brand-title-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+
+        .gate-emblem {
+            width: 58px;
+            height: 58px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            transform: rotate(-3deg);
+            transition: transform 0.3s ease;
+        }
+
+        .gate-emblem:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        .gate-brand-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            letter-spacing: -0.035em;
+            background: linear-gradient(135deg, #ffffff 30%, #93c5fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+        }
+
+        .gate-subtitle {
+            font-size: 1.12rem;
+            color: #94a3b8;
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        /* Two Main Highlighted Options Grid */
+        .gate-portals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 32px;
+            max-width: 1040px;
+            width: 100%;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gate-card {
+            background: var(--gate-card-bg);
+            border: 1px solid var(--gate-border);
+            border-radius: 24px;
+            padding: 38px 32px;
+            backdrop-filter: blur(18px);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+        }
+
+        .gate-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            transition: height 0.3s ease;
+        }
+
+        /* Card 1: Student Portal Specifics */
+        .gate-card-student::before {
+            background: linear-gradient(90deg, #10b981 0%, #06b6d4 100%);
+        }
+
+        .gate-card-student:hover {
+            border-color: rgba(16, 185, 129, 0.45);
+            transform: translateY(-6px);
+            box-shadow: 0 25px 50px -15px rgba(16, 185, 129, 0.25), 0 0 25px rgba(16, 185, 129, 0.1);
+        }
+
+        .gate-card-student:hover::before {
+            height: 6px;
+        }
+
+        /* Card 2: Administrative Block Specifics */
+        .gate-card-admin::before {
+            background: linear-gradient(90deg, #f59e0b 0%, #ef4444 100%);
+        }
+
+        .gate-card-admin:hover {
+            border-color: rgba(245, 158, 11, 0.45);
+            transform: translateY(-6px);
+            box-shadow: 0 25px 50px -15px rgba(245, 158, 11, 0.25), 0 0 25px rgba(245, 158, 11, 0.1);
+        }
+
+        .gate-card-admin:hover::before {
+            height: 6px;
+        }
+
+        /* Card Header & Badges */
+        .portal-top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px;
+        }
+
+        .portal-avatar-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            transition: transform 0.3s ease;
+        }
+
+        .gate-card:hover .portal-avatar-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .student-avatar {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #34d399;
+        }
+
+        .admin-avatar {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #fbbf24;
+        }
+
+        .portal-badge-chip {
+            padding: 5px 12px;
+            border-radius: 9999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .chip-student {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .chip-admin {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.35);
+        }
+
+        .gate-card h2 {
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
+        }
+
+        .gate-card p.portal-card-desc {
+            color: #94a3b8;
+            font-size: 0.94rem;
+            line-height: 1.55;
+            margin-bottom: 24px;
+            min-height: 48px;
+        }
+
+        /* Feature Lists */
+        .portal-highlights {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 26px;
+        }
+
+        .portal-highlights li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.88rem;
+            color: #cbd5e1;
+        }
+
+        .portal-highlights li svg {
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .student-check {
+            color: #10b981;
+        }
+
+        .admin-check {
+            color: #f59e0b;
+        }
+
+        /* Quick Box in Card */
+        .card-inner-box {
+            background: rgba(11, 17, 32, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 24px;
+        }
+
+        .box-label {
+            font-size: 0.76rem;
+            color: #94a3b8;
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .track-input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .track-input {
+            flex: 1;
+            padding: 9px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+        }
+
+        .track-input:focus {
+            outline: none;
+            border-color: #10b981;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-track-mini {
+            padding: 9px 16px;
+            border-radius: 8px;
+            border: none;
+            background: #10b981;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-track-mini:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+
+        .admin-stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            color: #94a3b8;
+            padding: 2px 0;
+        }
+
+        .admin-stat-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        /* Main Highlighted Buttons with Good Animation */
+        .btn-main-portal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 16px 24px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            margin-top: auto;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-main-portal::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 40px;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.25);
+            transform: rotate(25deg);
+            transition: all 0.6s ease;
+        }
+
+        .btn-main-portal:hover::after {
+            left: 130%;
+        }
+
+        /* Student Button */
+        .btn-portal-student {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #ffffff;
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.35);
+        }
+
+        .btn-portal-student:hover {
+            background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 12px 30px rgba(16, 185, 129, 0.5);
+            color: #fff;
+        }
+
+        /* Administrative Button */
+        .btn-portal-admin {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: #0f172a;
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.35);
+        }
+
+        .btn-portal-admin:hover {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 12px 30px rgba(245, 158, 11, 0.5);
+            color: #0f172a;
+        }
+
+        .btn-main-portal svg.arrow-icon {
+            transition: transform 0.25s ease;
+        }
+
+        .btn-main-portal:hover svg.arrow-icon {
+            transform: translateX(5px);
+        }
+
+        /* Live Campus Ticker Bar */
+        .gate-ticker-bar {
+            max-width: 1040px;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .ticker-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ticker-tag {
+            font-size: 0.78rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        .ticker-text {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #38bdf8;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .pulse-live {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #10b981;
+            animation: pulseLive 1.8s infinite;
+        }
+
+        @keyframes pulseLive {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.4); opacity: 0.5; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .gate-brand-title {
+                font-size: 2.3rem;
+            }
+            .gate-portals-grid {
+                grid-template-columns: 1fr;
+            }
+            .gate-ticker-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body class="gateway-body">
+
+    <!-- Top Center Highlighted Project Gate Header -->
+    <header class="gate-center-header">
+        <div class="gate-pill-badge">
+            <span class="gate-pill-dot"></span>
+            <span>Campus Smart Queue & Verification System</span>
+        </div>
+
+        <div class="gate-brand-title-wrap">
+            <div class="gate-emblem">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <h1 class="gate-brand-title">QueueLess</h1>
+        </div>
+
+        <p class="gate-subtitle">
+            Welcome to the centralized campus queuing and appointment gateway. Please select your dedicated portal below to proceed smoothly without conflicts.
+        </p>
+    </header>
+
+    <!-- Two Main Highlighted Portals Grid -->
+    <main class="gate-portals-grid">
+
+        <!-- OPTION 1: STUDENT PORTAL & STUDENT LOGIN -->
+        <article class="gate-card gate-card-student">
+            <div class="portal-top-bar">
+                <div class="portal-avatar-icon student-avatar">🎓</div>
+                <span class="portal-badge-chip chip-student">
+                    <span>Students Zone &bull; Open Access</span>
+                </span>
+            </div>
+
+            <h2>Student Portal</h2>
+            <p class="portal-card-desc">
+                Book official digital tokens for university certificates, upload verification documents, and track your designated visit slot in real time.
+            </p>
+
+            <ul class="portal-highlights">
+                <li>
+                    <svg class="student-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span><strong>Book Digital Token:</strong> Instant token registration without physical standing.</span>
+                </li>
+                <li>
+                    <svg class="student-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span><strong>Afternoon & Morning Slots:</strong> Choose or view assigned appointment slot.</span>
+                </li>
+                <li>
+                    <svg class="student-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span><strong>Personal Digital Pass:</strong> Track your turn live with zero administrative conflict.</span>
+                </li>
+                <li>
+                    <svg class="student-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span><strong>Upload Verification Files:</strong> Attach ID cards, receipts, or marksheets safely.</span>
+                </li>
+            </ul>
+
+            <!-- Quick Token Track Box -->
+            <div class="card-inner-box">
+                <span class="box-label">Already have a token? Quick track your pass:</span>
+                <div class="track-input-group">
+                    <input type="text" id="home-token-input" class="track-input" placeholder="e.g. T1 or T2" maxlength="10">
+                    <button id="home-btn-track" class="btn-track-mini">Track</button>
+                </div>
+            </div>
+
+            <!-- Main Highlighted Student Button with Good Animation -->
+            <a href="student.html" class="btn-main-portal btn-portal-student" id="btn-enter-student">
+                <span>Enter Student Portal</span>
+                <svg class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </article>
+
+        <!-- OPTION 2: ADMINISTRATIVE BLOCK & STAFF LOGIN -->
+        <article class="gate-card gate-card-admin">
+            <div class="portal-top-bar">
+                <div class="portal-avatar-icon admin-avatar">🏛️</div>
+                <span class="portal-badge-chip chip-admin">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <span>Staff Only &bull; Login Required</span>
+                </span>
+            </div>
+
+            <h2>Administrative Block</h2>
+            <p class="portal-card-desc">
+                Protected counter workstation for administrative officers. <strong>Name & Password authentication required.</strong> Students are restricted from operating this block.
+            </p>
+
+            <ul class="portal-highlights">
+                <li>
+                    <svg class="admin-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span><strong>Designate Visit Slots:</strong> Assign official afternoon/working day appointments.</span>
+                </li>
+                <li>
+                    <svg class="admin-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span><strong>Inspect Student Files:</strong> Review uploaded IDs and certificate requests.</span>
+                </li>
+                <li>
+                    <svg class="admin-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span><strong>Application Approval:</strong> One-click approve, reject, or request correction.</span>
+                </li>
+                <li>
+                    <svg class="admin-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span><strong>Counter Call Center:</strong> 📢 Call Next token with chime and announce next turn.</span>
+                </li>
+            </ul>
+
+            <!-- Live Counter Metrics Box -->
+            <div class="card-inner-box">
+                <div class="admin-stat-row">
+                    <span>Pending Student Applications:</span>
+                    <span id="home-pending-count" class="admin-stat-val" style="color: #fbbf24;">--</span>
+                </div>
+                <div class="admin-stat-row" style="margin-top: 6px;">
+                    <span>Waiting in Active Queue:</span>
+                    <span id="home-queue-count" class="admin-stat-val" style="color: #38bdf8;">--</span>
+                </div>
+            </div>
+
+            <!-- Main Highlighted Administrative Button with Good Animation -->
+            <a href="admin.html" class="btn-main-portal btn-portal-admin" id="btn-enter-admin">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span>Administrative Staff Login</span>
+                <svg class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </article>
+
+    </main>
+
+    <!-- Bottom Campus Live Status Ticker -->
+    <footer class="gate-ticker-bar">
+        <div class="ticker-group">
+            <span class="pulse-live"></span>
+            <span class="ticker-tag">Live Counter 1</span>
+            <span id="ticker-serving" class="ticker-text">Serving: --</span>
+        </div>
+
+        <div class="ticker-group">
+            <span class="ticker-tag">Next Student</span>
+            <span id="ticker-next" class="ticker-text" style="color: #a78bfa;">--</span>
+        </div>
+
+        <div class="ticker-group">
+            <span class="ticker-tag">Operating Hours</span>
+            <span style="font-size: 0.88rem; color: #cbd5e1; font-weight: 600;">Mon - Fri: 09:00 AM - 05:00 PM (Afternoon Slots)</span>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const homeBtnTrack = document.getElementById('home-btn-track');
+            const homeTokenInput = document.getElementById('home-token-input');
+
+            function handleHomeTrack() {
+                const val = homeTokenInput.value.trim().toUpperCase();
+                if (val) {
+                    window.location.href = `student.html#track=${encodeURIComponent(val)}`;
+                } else {
+                    window.location.href = 'student.html';
+                }
+            }
+
+            if (homeBtnTrack) homeBtnTrack.addEventListener('click', handleHomeTrack);
+            if (homeTokenInput) {
+                homeTokenInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') handleHomeTrack();
+                });
+            }
+
+            async function updateGatewayData() {
+                try {
+                    const [queueRes, appsRes] = await Promise.all([
+                        fetch('/api/queue'),
+                        fetch('/api/applications')
+                    ]);
+                    const queue = await queueRes.json();
+                    const apps = await appsRes.json();
+
+                    const pending = apps.filter(a => a.status === 'PENDING').length;
+                    document.getElementById('home-pending-count').textContent = pending;
+                    document.getElementById('home-queue-count').textContent = queue.length;
+
+                    const tickerServing = document.getElementById('ticker-serving');
+                    const tickerNext = document.getElementById('ticker-next');
+
+                    if (queue.length > 0) {
+                        tickerServing.textContent = `Token ${queue[0].tokenNumber} (${queue[0].studentName})`;
+                    } else {
+                        tickerServing.textContent = 'All clear';
+                    }
+
+                    if (queue.length > 1) {
+                        tickerNext.textContent = `Token ${queue[1].tokenNumber}`;
+                    } else {
+                        tickerNext.textContent = 'None waiting';
+                    }
+                } catch (e) {
+                    console.error('Error updating gateway', e);
+                }
+            }
+
+            updateGatewayData();
+            setInterval(updateGatewayData, 4000);
+        });
+    </script>
+</body>
+</html>
